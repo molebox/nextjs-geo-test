@@ -5,6 +5,6 @@ export async function middleware(req: NextRequest) {
   console.log({geo})
 
   const res = NextResponse.next()
-  res.headers.append('x-visitors-city',  geo.city)
+  res.headers.append('x-visitors-city',  geo.city.normalize('NFD').replace(/[\u0300-\u036f]/g, ""))
   return res
 }
