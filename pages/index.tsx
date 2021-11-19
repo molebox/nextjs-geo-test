@@ -1,8 +1,9 @@
+import { GetServerSideProps } from 'next'
 import Head from 'next/head'
 import Image from 'next/image'
 import styles from '../styles/Home.module.css'
 
-export default function Home() {
+export default function Home({city}) {
   return (
     <div className={styles.container}>
       <Head>
@@ -15,6 +16,8 @@ export default function Home() {
         <h1 className={styles.title}>
           Welcome to <a href="https://nextjs.org">Next.js!</a>
         </h1>
+
+        <h2 style={{color: 'red', fontSize: '3em'}}>City: {city}</h2>
 
         <p className={styles.description}>
           Get started by editing{' '}
@@ -66,4 +69,15 @@ export default function Home() {
       </footer>
     </div>
   )
+}
+
+export const getServerSideProps: GetServerSideProps = async ({req}) => {
+  console.log(req.headers)
+  const city: string | string[] = req.headers['x-visitors-city'] || 'No city'
+  console.log(city)
+  return {
+    props: {
+      city
+    },
+  }
 }
